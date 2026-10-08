@@ -1,0 +1,2042 @@
+# TENHFLOW — SOCIAL COMMERCE ORDER MANAGEMENT PLATFORM
+
+Build a polished, production-quality SaaS web application called **TenhFlow**.
+
+## 01 — PRODUCT
+
+**Name:** TenhFlow
+
+**Tagline:** From customer chat to confirmed order.
+
+**Product type:** Social-commerce order management SaaS
+
+**Primary market:** Cambodian online sellers
+
+**Primary users:** Small and medium online sellers who sell products through Facebook, Messenger, Telegram, comments, and livestreams.
+
+### Core problem
+
+Many online sellers manage sales manually through:
+
+* Facebook comments
+* Facebook/Messenger conversations
+* Telegram chats
+* Livestream comments
+* Phone calls
+* Notes
+* Excel/Google Sheets
+
+A customer may say:
+
+> “A12 black M x2”
+
+The seller then has to manually:
+
+1. Find the customer
+2. Identify the product
+3. Understand the product code
+4. Record quantity
+5. Ask for phone number
+6. Ask for address
+7. Calculate the price
+8. Create an order
+9. Track payment
+10. Arrange delivery
+
+This is slow, repetitive, and easy to get wrong.
+
+### TenhFlow's solution
+
+TenhFlow turns customer conversations into structured orders.
+
+The main workflow is:
+
+**Catch → Understand → Match → Confirm → Deliver → Track**
+
+The product should feel like a tool built specifically for social sellers, NOT a generic CRM or ERP.
+
+---
+
+# 02 — PRODUCT PRINCIPLE
+
+The main UX principle is:
+
+> **The seller should spend their time selling, not copying information from chats into spreadsheets.**
+
+Every feature should reduce manual work.
+
+### Important UX rule
+
+Never ask the seller to manually enter information that TenhFlow already knows.
+
+If the system knows:
+
+* Customer → reuse customer
+* Product code → identify product
+* Variant → select automatically
+* Quantity → extract automatically
+* Phone → reuse customer phone
+* Address → reuse customer address
+* Price → calculate automatically
+
+The seller should mainly need to:
+
+**Review → Confirm**
+
+---
+
+# 03 — MVP SCOPE
+
+Build the following main modules:
+
+1. Dashboard
+2. Customer Capture
+3. Inbox
+4. Orders
+5. Customers
+6. Products
+7. Delivery
+8. Payments
+9. Settings
+
+The HERO feature is:
+
+## Customer Capture
+
+The entire product should revolve around turning a message/comment into a confirmed order.
+
+---
+
+# 04 — APP STRUCTURE
+
+Use a desktop-first SaaS dashboard with responsive behavior for tablet and mobile.
+
+Main navigation:
+
+```text
+TenhFlow
+
+Dashboard
+Customer Capture
+Inbox
+Orders
+Customers
+Products
+Delivery
+Payments
+
+----------------
+
+Settings
+Help
+```
+
+Use a clean sidebar navigation.
+
+Show notification badges where appropriate.
+
+Example:
+
+```text
+Customer Capture    24
+Inbox               12
+Orders
+```
+
+---
+
+# 05 — BRAND / VISUAL DIRECTION
+
+Create a modern SaaS interface that feels:
+
+* Fast
+* Clean
+* Professional
+* Friendly
+* Modern
+* Practical
+* Slightly Gen-Z
+* Local-market aware
+
+Avoid making it look like:
+
+* A generic corporate ERP
+* An overly futuristic AI dashboard
+* A cryptocurrency dashboard
+* A banking app
+* A complicated enterprise system
+
+### Design direction
+
+Use:
+
+* Strong typography
+* Clear hierarchy
+* Rounded cards
+* Moderate corner radius
+* Clean spacing
+* Subtle borders
+* Light shadows
+* Simple icons
+* Compact data tables
+* Clear status badges
+* Strong primary CTA
+
+Default theme:
+
+**Light mode**
+
+Also support:
+
+**Dark mode**
+
+The light theme should be the default.
+
+---
+
+# 06 — COLOR SYSTEM
+
+Create a professional SaaS color system.
+
+Primary brand color should feel energetic and trustworthy.
+
+Use one strong accent color for:
+
+* Primary buttons
+* Active navigation
+* Important highlights
+* AI actions
+* Selected states
+
+Use semantic colors for:
+
+* Success
+* Warning
+* Error
+* Information
+
+Do not overuse colors.
+
+The interface should remain mostly neutral.
+
+---
+
+# 07 — TYPOGRAPHY
+
+Use a highly readable modern sans-serif font.
+
+Recommended:
+
+* Inter
+* Geist
+* Plus Jakarta Sans
+
+Use clear hierarchy:
+
+```text
+Display
+H1
+H2
+H3
+Body
+Small
+Caption
+```
+
+Support both:
+
+**English**
+
+and future:
+
+**Khmer**
+
+The interface should be designed so Khmer text will not break layouts.
+
+---
+
+# 08 — ONBOARDING
+
+Create a short onboarding flow.
+
+### Screen 1 — Welcome
+
+```text
+Welcome to TenhFlow
+
+Turn customer conversations into confirmed orders.
+
+[Get Started]
+```
+
+### Screen 2 — Create Shop
+
+Fields:
+
+```text
+Shop Name
+Shop Category
+Phone
+Location
+Currency
+```
+
+Example:
+
+```text
+Shop Name:
+Rith Fashion
+
+Category:
+Fashion
+
+Location:
+Phnom Penh
+
+Currency:
+USD
+```
+
+### Screen 3 — Connect Channels
+
+Show:
+
+```text
+Facebook
+Messenger
+Telegram
+```
+
+For the MVP, integrations can be represented as connection states/mock integrations.
+
+Do NOT fake real API behavior.
+
+Clearly separate:
+
+**Connected**
+**Not Connected**
+**Coming Soon**
+
+### Screen 4 — Add First Product
+
+```text
+Product Name
+Product Code
+Price
+Category
+Variants
+```
+
+Example:
+
+```text
+Classic T-Shirt
+A12
+$8
+
+Color:
+Black / White / Blue
+
+Size:
+S / M / L / XL
+```
+
+### Completion
+
+```text
+You're ready to catch your first customer.
+
+[Go to Dashboard]
+```
+
+---
+
+# 09 — DASHBOARD
+
+The dashboard should immediately answer:
+
+> How is my shop doing today?
+
+Top summary cards:
+
+```text
+Today's Orders
+42
+
+Revenue
+$486.00
+
+Pending Orders
+8
+
+COD Pending
+$182.00
+```
+
+Secondary metrics:
+
+```text
+Confirmed
+Packing
+Out for Delivery
+Delivered
+Cancelled
+```
+
+Example:
+
+```text
+ORDER PIPELINE
+
+New              12
+Confirmed         8
+Packing           5
+Out for Delivery  9
+Delivered         8
+```
+
+### Sales chart
+
+Show:
+
+* Revenue over time
+* Orders over time
+
+Allow:
+
+```text
+Today
+7 Days
+30 Days
+```
+
+### Top products
+
+```text
+A12 — Classic T-Shirt
+48 sold
+
+A05 — Hoodie
+31 sold
+
+B03 — Jeans
+19 sold
+```
+
+### Recent activity
+
+Show events such as:
+
+```text
+Sokha placed Order #10482
+2 minutes ago
+
+Dara's order was confirmed
+8 minutes ago
+
+Order #10476 delivered
+15 minutes ago
+```
+
+Keep dashboard useful and not overloaded.
+
+---
+
+# 10 — CUSTOMER CAPTURE
+
+This is the most important screen in TenhFlow.
+
+Create a dedicated workspace called:
+
+**Customer Capture**
+
+Purpose:
+
+> Process potential customers and turn them into orders.
+
+### Top summary
+
+```text
+Customer Capture
+
+24 waiting
+
+Ready to Order     12
+Missing Info        8
+Needs Review        4
+```
+
+### Capture queue
+
+Each customer card should show:
+
+```text
+Sokha
+
+"A12 black M x2"
+
+Facebook Comment
+
+AI detected:
+A12
+Black
+M
+Quantity 2
+
+Customer:
+Sokha
+
+[Review]
+```
+
+Another:
+
+```text
+Dara
+
+"A15 white L"
+
+Telegram
+
+AI detected:
+A15
+White
+L
+
+Missing:
+Phone
+Address
+
+[Ask Customer]
+```
+
+---
+
+# 11 — QUICK CAPTURE
+
+Create a very fast capture interaction.
+
+Seller receives:
+
+```text
+A12 black M x2
+```
+
+They click:
+
+**Capture**
+
+Open a compact side panel or modal.
+
+Show:
+
+```text
+QUICK ORDER
+
+Customer
+Sokha
+
+Product
+A12 · Classic T-Shirt
+
+Color
+Black
+
+Size
+M
+
+Quantity
+2
+
+Subtotal
+$16
+
+Delivery
+$2
+
+Total
+$18
+```
+
+Actions:
+
+```text
+[Cancel]
+[Confirm Order]
+```
+
+Target interaction:
+
+> Customer message → confirmed order in under 10 seconds.
+
+---
+
+# 12 — AI ORDER EXTRACTION
+
+Create an AI extraction interface.
+
+Input:
+
+```text
+"បង ខ្ញុំយក A12 ពណ៌ខ្មៅ size M ២ អាវ"
+```
+
+Extract:
+
+```text
+Product
+A12
+
+Color
+Black
+
+Size
+M
+
+Quantity
+2
+```
+
+Support:
+
+### English
+
+```text
+A12 black M x2
+```
+
+### Khmer
+
+```text
+A12 ពណ៌ខ្មៅ size M ២
+```
+
+### Khmer-English mixed
+
+```text
+A12 black size M 2 បង
+```
+
+The AI should normalize these into structured order data.
+
+### Important
+
+AI extraction is a suggestion.
+
+Never automatically finalize an order without seller confirmation.
+
+Show:
+
+```text
+AI Confidence
+96%
+```
+
+For low-confidence extraction:
+
+```text
+AI Confidence
+62%
+
+Needs Review
+```
+
+Highlight uncertain fields.
+
+---
+
+# 13 — PRODUCT CODE SYSTEM
+
+Every product can have a simple seller-defined code.
+
+Example:
+
+```text
+Product:
+Classic T-Shirt
+
+Code:
+A12
+
+Price:
+$8
+```
+
+Allow:
+
+### Custom code
+
+```text
+A12
+```
+
+### Automatic code
+
+```text
+TS001
+TS002
+TS003
+```
+
+Product codes should be searchable everywhere.
+
+Examples of customer messages:
+
+```text
+A12
+A12 x2
+A12 black M
+A12 2pcs black M
+```
+
+TenhFlow should understand these as the same product.
+
+---
+
+# 14 — PRODUCT VARIANTS
+
+Support:
+
+```text
+Color
+Size
+Style
+```
+
+Example:
+
+```text
+A12
+
+Black
+S
+M
+L
+XL
+
+White
+S
+M
+L
+XL
+```
+
+Allow the seller to define variant combinations.
+
+Don't make product setup unnecessarily complicated.
+
+---
+
+# 15 — MISSING INFORMATION
+
+This is another major feature.
+
+Example:
+
+```text
+A12
+Black
+M
+×2
+
+✓ Product
+✓ Color
+✓ Size
+✓ Quantity
+
+✕ Phone
+✕ Address
+```
+
+Show:
+
+```text
+Missing customer information
+```
+
+CTA:
+
+**Ask Customer**
+
+Generate a suggested message.
+
+Example Khmer message:
+
+```text
+បង សូមផ្ញើលេខទូរស័ព្ទ និងអាសយដ្ឋានសម្រាប់ដឹកជូនផង 🙏
+```
+
+Allow seller to:
+
+* Edit message
+* Copy
+* Send
+
+Do not automatically send messages without seller approval in MVP.
+
+---
+
+# 16 — CUSTOMER MATCHING
+
+When a potential order arrives, search existing customers.
+
+Example:
+
+```text
+Possible Existing Customer
+
+Sokha
+
+18 previous orders
+15 delivered
+1 cancelled
+2 pending
+
+95% match
+```
+
+Actions:
+
+```text
+[Use Existing Customer]
+[Create New Customer]
+```
+
+Match based on available identifiers such as:
+
+* Phone number
+* Platform identity
+* Customer name
+* Previous order data
+
+Avoid creating duplicate customers.
+
+---
+
+# 17 — CUSTOMER PROFILE
+
+Customer detail page:
+
+```text
+SOKHA
+
+Phone
+012 XXX XXX
+
+Address
+Toul Kork, Phnom Penh
+
+Customer Since
+March 2026
+```
+
+Summary:
+
+```text
+Total Orders
+18
+
+Delivered
+15
+
+Cancelled
+1
+
+Pending
+2
+
+Total Spent
+$286
+```
+
+Tabs:
+
+```text
+Overview
+Orders
+Payments
+Notes
+```
+
+Show order history.
+
+Example:
+
+```text
+#10482
+A12 Black M ×2
+$18
+Out for Delivery
+
+#10451
+A05 White L
+$10
+Delivered
+```
+
+---
+
+# 18 — CUSTOMER RELIABILITY
+
+Show a simple customer reliability indicator.
+
+Example:
+
+```text
+Customer Reliability
+
+95%
+Reliable
+```
+
+Based on:
+
+* Delivered orders
+* Cancelled orders
+* Failed deliveries
+
+Do NOT make this overly complex.
+
+Use it as an informational signal.
+
+---
+
+# 19 — INBOX
+
+Inbox should organize conversations by sales intent.
+
+Categories:
+
+```text
+All
+Potential Orders
+Missing Information
+Questions
+Ordered
+Closed
+```
+
+Conversation list:
+
+```text
+Sokha
+"A12 black M"
+Potential Order
+
+Dara
+"How much is delivery?"
+Question
+
+Vanna
+"A12 x2"
+Missing Address
+```
+
+Conversation detail:
+
+```text
+Customer conversation
+---------------------
+
+Customer:
+A12 black M x2
+
+Seller:
+Yes, available.
+
+Customer:
+Send to Toul Kork.
+```
+
+On the right side show:
+
+```text
+ORDER DETECTION
+
+A12
+Black
+M
+×2
+
+[Create Order]
+```
+
+Do NOT try to fully recreate Facebook Messenger or Telegram.
+
+Inbox is for **sales processing**, not replacing the social platforms.
+
+---
+
+# 20 — ORDERS
+
+Create an order management page.
+
+Provide:
+
+### Table view
+
+Columns:
+
+```text
+Order
+Customer
+Items
+Total
+Payment
+Delivery
+Status
+Created
+```
+
+Example:
+
+```text
+#10482
+Sokha
+A12 ×2
+$18
+COD
+Delivery
+Out for Delivery
+```
+
+Filters:
+
+```text
+Status
+Channel
+Payment
+Date
+Customer
+Product
+```
+
+Search:
+
+```text
+Order ID
+Customer
+Phone
+Product code
+```
+
+---
+
+# 21 — ORDER STATUS
+
+Use:
+
+```text
+New
+Confirmed
+Packing
+Ready
+Out for Delivery
+Delivered
+Cancelled
+Failed Delivery
+Returned
+```
+
+The primary flow:
+
+```text
+New
+↓
+Confirmed
+↓
+Packing
+↓
+Ready
+↓
+Out for Delivery
+↓
+Delivered
+```
+
+Allow cancellation and failed delivery as alternative states.
+
+---
+
+# 22 — ORDER DETAIL
+
+Order detail should contain:
+
+### Customer
+
+```text
+Sokha
+012 XXX XXX
+Toul Kork
+```
+
+### Products
+
+```text
+A12
+Classic T-Shirt
+Black / M
+×2
+$16
+```
+
+### Delivery
+
+```text
+Delivery fee
+$2
+
+Address
+Toul Kork, Phnom Penh
+```
+
+### Payment
+
+```text
+Method
+COD
+
+Status
+Pending
+```
+
+### Total
+
+```text
+Subtotal       $16
+Delivery        $2
+----------------
+Total          $18
+```
+
+### Timeline
+
+```text
+Order created
+10:32 AM
+
+Confirmed
+10:34 AM
+
+Packing
+10:40 AM
+
+Out for Delivery
+11:15 AM
+```
+
+---
+
+# 23 — PAYMENTS
+
+Keep payments simple.
+
+Supported methods:
+
+```text
+Cash
+COD
+Bank Transfer
+KHQR
+```
+
+Payment statuses:
+
+```text
+Unpaid
+Pending
+Paid
+Partial
+Refunded
+```
+
+Payment detail:
+
+```text
+Order #10482
+
+Total
+$18
+
+Paid
+$0
+
+Remaining
+$18
+
+Method
+COD
+```
+
+Do NOT build full accounting.
+
+---
+
+# 24 — DELIVERY
+
+Delivery management should remain lightweight in MVP.
+
+Fields:
+
+```text
+Delivery Method
+Delivery Fee
+Address
+Phone
+Rider
+Status
+```
+
+Example:
+
+```text
+Delivery Method
+Own Rider
+
+Rider
+Dara
+
+Address
+Toul Kork
+
+Status
+Out for Delivery
+```
+
+Statuses:
+
+```text
+Pending
+Assigned
+Picked Up
+Out for Delivery
+Delivered
+Failed
+```
+
+Real delivery provider integrations should be marked:
+
+**Coming Soon**
+
+Do not fake API integrations.
+
+---
+
+# 25 — PRODUCTS
+
+Product list:
+
+```text
+Product
+Code
+Price
+Stock
+Status
+```
+
+Example:
+
+```text
+Classic T-Shirt
+A12
+$8
+42
+Active
+```
+
+Product detail:
+
+```text
+A12
+
+Classic T-Shirt
+
+$8
+
+Colors:
+Black
+White
+Blue
+
+Sizes:
+S
+M
+L
+XL
+```
+
+Allow:
+
+* Create
+* Edit
+* Duplicate
+* Archive
+
+---
+
+# 26 — INVENTORY
+
+Keep this minimal.
+
+Show:
+
+```text
+Stock
+42
+
+Low Stock
+8
+
+Out of Stock
+2
+```
+
+Allow seller to update stock.
+
+When an order is confirmed:
+
+```text
+A12 stock
+42 → 40
+```
+
+Do not build warehouse management in MVP.
+
+---
+
+# 27 — SETTINGS
+
+Sections:
+
+```text
+Shop
+Channels
+Products
+Order Settings
+Delivery
+Payment
+Notifications
+Team
+Appearance
+```
+
+### Shop
+
+```text
+Shop Name
+Logo
+Phone
+Address
+Currency
+```
+
+### Order settings
+
+Allow:
+
+```text
+Default delivery fee
+Default payment method
+Order numbering
+```
+
+### Appearance
+
+```text
+Light
+Dark
+System
+```
+
+---
+
+# 28 — NOTIFICATIONS
+
+Use notifications for actionable events:
+
+```text
+New potential customer
+Missing customer information
+Low stock
+Payment pending
+Delivery failed
+```
+
+Avoid excessive notifications.
+
+---
+
+# 29 — EMPTY STATES
+
+Create polished empty states.
+
+Examples:
+
+```text
+No customers yet
+
+Once you capture your first customer,
+they'll appear here.
+
+[Capture Customer]
+```
+
+```text
+No orders yet
+
+Your confirmed orders will appear here.
+
+[Go to Customer Capture]
+```
+
+```text
+No products
+
+Add your first product and give it
+a simple code customers can use.
+
+[Add Product]
+```
+
+---
+
+# 30 — ERROR STATES
+
+Design proper states for:
+
+* Failed extraction
+* Unknown product code
+* Missing variant
+* Duplicate customer
+* Failed connection
+* Failed message
+* Invalid order
+* Out-of-stock product
+
+Example:
+
+```text
+We couldn't identify product "A99".
+
+No matching product code found.
+
+[Create Product]
+[Edit Code]
+```
+
+---
+
+# 31 — LIVESTREAM MODE — FUTURE FEATURE
+
+Do NOT make this part of the core MVP implementation, but structure the UI so it can be added later.
+
+Future feature:
+
+```text
+LIVE SALE
+
+Comments Captured
+124
+
+Potential Orders
+96
+
+Confirmed
+72
+
+Missing Info
+18
+
+Duplicates
+5
+
+Cancelled
+3
+```
+
+The seller can process orders while livestreaming.
+
+This should become a major future differentiator.
+
+---
+
+# 32 — FUTURE SOCIAL INTEGRATIONS
+
+Design integration architecture so these can eventually connect:
+
+```text
+Facebook Pages
+Messenger
+Facebook Comments
+Telegram
+TikTok
+```
+
+For the prototype/MVP:
+
+Use realistic mock data.
+
+Clearly label unimplemented integrations as:
+
+**Connect**
+**Not Connected**
+**Coming Soon**
+
+Never pretend an API is connected when it isn't.
+
+---
+
+# 33 — FUTURE AI FEATURES
+
+Do not overbuild AI.
+
+Future capabilities:
+
+### AI Order Extraction
+
+Convert natural language → structured order.
+
+### AI Customer Matching
+
+Detect returning customers.
+
+### AI Missing Information
+
+Identify what the customer hasn't provided.
+
+### AI Suggested Replies
+
+Suggest Khmer/English responses.
+
+### AI Conversation Classification
+
+Classify:
+
+```text
+Potential Order
+Question
+Complaint
+Payment
+Delivery
+General
+```
+
+### AI Duplicate Detection
+
+Detect repeated orders.
+
+---
+
+# 34 — LANGUAGE
+
+Primary UI language:
+
+**English**
+
+Prepare architecture for:
+
+**Khmer**
+
+Customer-generated content can be:
+
+* English
+* Khmer
+* Khmer-English mixed
+
+AI extraction should be designed to support all three.
+
+---
+
+# 35 — RESPONSIVE DESIGN
+
+Desktop is the primary experience.
+
+Support:
+
+### Desktop
+
+Full sidebar + multi-column workspace.
+
+### Tablet
+
+Collapsible sidebar.
+
+### Mobile
+
+Bottom navigation or compact navigation.
+
+Mobile should prioritize:
+
+```text
+Capture
+Inbox
+Orders
+Customers
+```
+
+The seller should be able to process a customer quickly from their phone.
+
+---
+
+# 36 — DEMO DATA
+
+Populate the application with realistic Cambodian-style demo data.
+
+Example customers:
+
+```text
+Sokha
+Dara
+Vanna
+Chenda
+Sovann
+```
+
+Example locations:
+
+```text
+Toul Kork
+Sen Sok
+Chamkarmon
+Daun Penh
+Meanchey
+7 Makara
+```
+
+Example products:
+
+```text
+A01 — Basic T-Shirt
+A02 — Oversized T-Shirt
+A03 — Hoodie
+B01 — Jeans
+B02 — Cap
+```
+
+Use realistic order data.
+
+Do not use real people's private information.
+
+---
+
+# 37 — IMPORTANT PRODUCT BEHAVIOR
+
+### Product code lookup
+
+When seller enters:
+
+```text
+A12
+```
+
+automatically find:
+
+```text
+Classic T-Shirt
+```
+
+### Variant extraction
+
+If customer says:
+
+```text
+A12 black M
+```
+
+automatically map:
+
+```text
+A12
+Black
+M
+```
+
+### Quantity extraction
+
+Understand:
+
+```text
+x2
+2pcs
+2 pieces
+×2
+២
+ពីរ
+```
+
+where appropriate.
+
+### Customer matching
+
+If phone number or platform identity matches an existing customer:
+
+Show the existing customer.
+
+### Missing information
+
+Never block the seller without explaining what's missing.
+
+### Confirmation
+
+Always give seller a clear final review before confirming an order.
+
+---
+
+# 38 — CORE USER FLOW
+
+This is the most important flow in the entire application.
+
+```text
+CUSTOMER MESSAGE
+        ↓
+CAPTURE
+        ↓
+AI EXTRACTION
+        ↓
+PRODUCT CODE MATCH
+        ↓
+VARIANT + QUANTITY
+        ↓
+CUSTOMER MATCH
+        ↓
+CHECK MISSING INFO
+        ↓
+    ┌───────┐
+    │Missing│
+    └───┬───┘
+        ↓
+ ASK CUSTOMER
+        ↓
+ INFORMATION COMPLETE
+        ↓
+ QUICK ORDER REVIEW
+        ↓
+ CONFIRM ORDER
+        ↓
+ PACKING
+        ↓
+ DELIVERY
+        ↓
+ PAYMENT
+        ↓
+ DELIVERED
+```
+
+---
+
+# 39 — KEY UX METRIC
+
+Design the product around:
+
+### **Time to Confirmed Order**
+
+Target:
+
+> **Under 10 seconds for a complete customer message.**
+
+For example:
+
+Input:
+
+```text
+A12 black M x2
+```
+
+Output:
+
+```text
+Sokha
+A12
+Black / M
+×2
+$18 total
+
+[Confirm Order]
+```
+
+The seller should not need to fill five separate forms.
+
+---
+
+# 40 — SECURITY / DATA
+
+Use proper:
+
+* Authentication
+* User accounts
+* Shop ownership
+* Role permissions
+* Input validation
+* Secure API handling
+* Environment variables for secrets
+
+Never expose API keys in frontend code.
+
+---
+
+# 41 — TECH STACK
+
+Use a modern maintainable stack.
+
+Preferred:
+
+### Frontend
+
+React + TypeScript
+
+### Build
+
+Vite
+
+### Styling
+
+Tailwind CSS
+
+### Components
+
+Reusable component architecture.
+
+### Icons
+
+Lucide React
+
+### Backend
+
+Use a clean API architecture.
+
+If building a functional prototype, use:
+
+* Supabase OR
+* PostgreSQL + backend API
+
+Authentication should be implemented properly if backend functionality is included.
+
+---
+
+# 42 — CODE ARCHITECTURE
+
+Do NOT put the entire application in one file.
+
+Use a scalable structure similar to:
+
+```text
+src/
+│
+├── components/
+│   ├── ui/
+│   ├── layout/
+│   ├── dashboard/
+│   ├── capture/
+│   ├── inbox/
+│   ├── orders/
+│   ├── customers/
+│   ├── products/
+│   └── delivery/
+│
+├── pages/
+│   ├── Dashboard/
+│   ├── Capture/
+│   ├── Inbox/
+│   ├── Orders/
+│   ├── Customers/
+│   ├── Products/
+│   ├── Delivery/
+│   ├── Payments/
+│   └── Settings/
+│
+├── data/
+├── hooks/
+├── services/
+├── types/
+├── utils/
+└── lib/
+```
+
+Create reusable components.
+
+Do not duplicate UI code unnecessarily.
+
+---
+
+# 43 — COMPONENT SYSTEM
+
+Create reusable components for:
+
+```text
+Button
+Input
+Select
+Dropdown
+Modal
+Drawer
+Badge
+Avatar
+Card
+Table
+Tabs
+Toast
+Tooltip
+Search
+Filter
+Pagination
+EmptyState
+StatusBadge
+OrderCard
+CustomerCard
+ProductCard
+ConversationCard
+```
+
+Create a consistent design system.
+
+---
+
+# 44 — IMPORTANT UI INTERACTIONS
+
+Include polished micro-interactions:
+
+* Hover states
+* Focus states
+* Loading states
+* Skeleton loading
+* Toast notifications
+* Drawer transitions
+* Modal transitions
+* Drag-and-drop where appropriate
+* Status transitions
+* Confirmation feedback
+
+Keep animations subtle and fast.
+
+Do not over-animate the SaaS dashboard.
+
+---
+
+# 45 — DEMO / PROTOTYPE MODE
+
+If real integrations are unavailable, create a realistic demo environment.
+
+Provide sample messages such as:
+
+```text
+A12 black M x2
+```
+
+```text
+បងយក A03 ពណ៌ស size L មួយ
+```
+
+```text
+A05 x3
+```
+
+When selected, the system should demonstrate the extraction workflow.
+
+This should make the prototype feel functional rather than static.
+
+---
+
+# 46 — PRODUCT DIFFERENTIATION
+
+TenhFlow should NOT compete by having the most features.
+
+It competes by being:
+
+### Faster.
+
+### Simpler.
+
+### Designed for social sellers.
+
+### Designed around customer capture.
+
+The primary value proposition:
+
+> **Don't search through chats. Catch the customer.**
+
+---
+
+# 47 — FUTURE ROADMAP
+
+### V1 — MVP
+
+Customer capture
+Product codes
+AI extraction
+Customer matching
+Missing information
+Orders
+Customers
+Products
+Basic payments
+Basic delivery
+Dashboard
+
+### V2
+
+Facebook integration
+Messenger integration
+Telegram integration
+Automated customer messages
+Livestream mode
+Advanced analytics
+
+### V3
+
+TikTok integration
+Delivery provider integrations
+Inventory
+Team management
+Advanced AI assistant
+Customer segmentation
+Marketing tools
+
+### V4
+
+Multi-shop
+Agency management
+API
+Marketplace integrations
+Regional expansion
+
+---
+
+# 48 — WHAT NOT TO DO
+
+Do NOT turn TenhFlow into:
+
+* Generic ERP
+* Generic CRM
+* Generic POS
+* Generic inventory platform
+* Generic chatbot
+* Full marketplace
+* Full accounting platform
+
+The product must remain centered around:
+
+> **Social conversation → customer → order**
+
+---
+
+# 49 — FINAL DESIGN GOAL
+
+When someone opens TenhFlow, they should immediately understand:
+
+> **“This helps me catch customers from my social sales and turn them into orders.”**
+
+The UI should feel:
+
+**Fast enough for a livestream seller.**
+
+**Simple enough for a small business owner.**
+
+**Powerful enough to replace spreadsheets and manual order tracking.**
+
+**Professional enough to become a real SaaS product.**
+
+Build the application as a polished, realistic product prototype with complete navigation, realistic data, functional interactions, responsive layouts, reusable components, and strong UX.
+
+The most important screen is **Customer Capture**.
+
+Make that experience exceptional.

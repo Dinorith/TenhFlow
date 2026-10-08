@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TenhFlow"
+description = "Social-commerce order management for Cambodian online sellers. Turn customer messages into reviewed, confirmed orders, then track fulfillment and payment."
+version = "1.0.0"
+id = "artifacts/tenhflow"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25928
+
+[services.development]
+run = "pnpm --filter @workspace/tenhflow run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tenhflow", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/tenhflow/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25928"
+BASE_PATH = "/"

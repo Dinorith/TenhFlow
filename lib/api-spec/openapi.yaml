@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: TenhFlow social-commerce order management API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: tenhflow
+    description: TenhFlow shop operations
 paths:
   /healthz:
     get:
@@ -24,7 +26,439 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /tenhflow/dashboard:
+    get:
+      operationId: getTenhflowDashboard
+      tags: [tenhflow]
+      summary: Get shop dashboard summary and sales series
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+  /tenhflow/activity:
+    get:
+      operationId: getTenhflowActivity
+      tags: [tenhflow]
+      summary: Get recent shop activity
+      responses:
+        "200":
+          description: Recent events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+  /tenhflow/captures:
+    get:
+      operationId: listCaptures
+      tags: [tenhflow]
+      summary: List customer capture queue
+      responses:
+        "200":
+          description: Capture queue
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Capture"
+    post:
+      operationId: createCapture
+      tags: [tenhflow]
+      summary: Extract and save a customer message for review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaptureInput"
+      responses:
+        "201":
+          description: Suggested capture
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Capture"
+  /tenhflow/captures/{id}:
+    patch:
+      operationId: updateCapture
+      tags: [tenhflow]
+      summary: Update extracted capture details
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaptureUpdate"
+      responses:
+        "200":
+          description: Updated capture
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Capture"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/captures/{id}/confirm:
+    post:
+      operationId: confirmCapture
+      tags: [tenhflow]
+      summary: Confirm a reviewed capture into an order
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfirmCaptureInput"
+      responses:
+        "201":
+          description: Confirmed order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/orders:
+    get:
+      operationId: listOrders
+      tags: [tenhflow]
+      summary: List orders
+      responses:
+        "200":
+          description: Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+  /tenhflow/orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [tenhflow]
+      summary: Get order detail
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Order detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      operationId: updateOrder
+      tags: [tenhflow]
+      summary: Update order status and payment
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderUpdate"
+      responses:
+        "200":
+          description: Updated order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/customers:
+    get:
+      operationId: listCustomers
+      tags: [tenhflow]
+      summary: List customers
+      responses:
+        "200":
+          description: Customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+    post:
+      operationId: createCustomer
+      tags: [tenhflow]
+      summary: Add a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "201":
+          description: Created customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+  /tenhflow/customers/{id}:
+    get:
+      operationId: getCustomer
+      tags: [tenhflow]
+      summary: Get customer profile and order history
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Customer profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      operationId: updateCustomer
+      tags: [tenhflow]
+      summary: Update customer details
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerUpdate"
+      responses:
+        "200":
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/products:
+    get:
+      operationId: listProducts
+      tags: [tenhflow]
+      summary: List products and stock
+      responses:
+        "200":
+          description: Products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      operationId: createProduct
+      tags: [tenhflow]
+      summary: Add a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Created product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /tenhflow/products/{id}:
+    patch:
+      operationId: updateProduct
+      tags: [tenhflow]
+      summary: Edit, update stock, or archive a product
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductUpdate"
+      responses:
+        "200":
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/delivery:
+    get:
+      operationId: listDeliveries
+      tags: [tenhflow]
+      summary: List delivery work
+      responses:
+        "200":
+          description: Deliveries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Delivery"
+  /tenhflow/delivery/{id}:
+    patch:
+      operationId: updateDelivery
+      tags: [tenhflow]
+      summary: Update delivery assignment or status
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeliveryUpdate"
+      responses:
+        "200":
+          description: Updated delivery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Delivery"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/payments:
+    get:
+      operationId: listPayments
+      tags: [tenhflow]
+      summary: List payment records
+      responses:
+        "200":
+          description: Payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Payment"
+  /tenhflow/payments/{id}:
+    patch:
+      operationId: updatePayment
+      tags: [tenhflow]
+      summary: Update payment status and amount paid
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentUpdate"
+      responses:
+        "200":
+          description: Updated payment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/inbox:
+    get:
+      operationId: listConversations
+      tags: [tenhflow]
+      summary: List sales conversations
+      responses:
+        "200":
+          description: Inbox conversations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Conversation"
+  /tenhflow/inbox/{id}:
+    patch:
+      operationId: updateConversation
+      tags: [tenhflow]
+      summary: Update conversation classification
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConversationUpdate"
+      responses:
+        "200":
+          description: Updated conversation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Conversation"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /tenhflow/settings:
+    get:
+      operationId: getSettings
+      tags: [tenhflow]
+      summary: Get shop settings and channel connection states
+      responses:
+        "200":
+          description: Shop settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopSettings"
+    patch:
+      operationId: updateSettings
+      tags: [tenhflow]
+      summary: Update shop settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShopSettingsUpdate"
+      responses:
+        "200":
+          description: Updated shop settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopSettings"
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +467,319 @@ components:
           type: string
       required:
         - status
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+    Dashboard:
+      type: object
+      properties:
+        todayOrders: { type: integer }
+        revenue: { type: number }
+        pendingOrders: { type: integer }
+        codPending: { type: number }
+        pipeline:
+          type: array
+          items:
+            $ref: "#/components/schemas/PipelineStage"
+        sales:
+          type: array
+          items:
+            $ref: "#/components/schemas/SalesPoint"
+        topProducts:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopProduct"
+      required: [todayOrders, revenue, pendingOrders, codPending, pipeline, sales, topProducts]
+    PipelineStage:
+      type: object
+      properties:
+        status: { type: string }
+        count: { type: integer }
+      required: [status, count]
+    SalesPoint:
+      type: object
+      properties:
+        label: { type: string }
+        revenue: { type: number }
+        orders: { type: integer }
+      required: [label, revenue, orders]
+    TopProduct:
+      type: object
+      properties:
+        code: { type: string }
+        name: { type: string }
+        sold: { type: integer }
+      required: [code, name, sold]
+    Activity:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        detail: { type: string }
+        time: { type: string }
+        channel: { type: string }
+      required: [id, title, detail, time, channel]
+    Capture:
+      type: object
+      properties:
+        id: { type: string }
+        customerName: { type: string }
+        customerId: { type: ["string", "null"] }
+        snippet: { type: string }
+        channel: { type: string }
+        status: { type: string }
+        productCode: { type: string }
+        productName: { type: string }
+        color: { type: string }
+        size: { type: string }
+        quantity: { type: integer }
+        unitPrice: { type: number }
+        deliveryFee: { type: number }
+        phone: { type: ["string", "null"] }
+        address: { type: ["string", "null"] }
+        confidence: { type: integer }
+        createdAt: { type: string }
+        missing: { type: array, items: { type: string } }
+      required: [id, customerName, customerId, snippet, channel, status, productCode, productName, color, size, quantity, unitPrice, deliveryFee, phone, address, confidence, createdAt, missing]
+    CaptureUpdate:
+      type: object
+      properties:
+        productCode: { type: string }
+        color: { type: string }
+        size: { type: string }
+        quantity: { type: integer, minimum: 1 }
+        customerName: { type: string }
+        phone: { type: ["string", "null"] }
+        address: { type: ["string", "null"] }
+        deliveryFee: { type: number, minimum: 0 }
+        status: { type: string }
+    CaptureInput:
+      type: object
+      properties:
+        customerName: { type: string, minLength: 1 }
+        snippet: { type: string, minLength: 1 }
+        channel: { type: string }
+      required: [customerName, snippet, channel]
+    ConfirmCaptureInput:
+      type: object
+      properties:
+        paymentMethod: { type: string }
+        deliveryMethod: { type: string }
+      required: [paymentMethod, deliveryMethod]
+    Order:
+      type: object
+      properties:
+        id: { type: string }
+        customerId: { type: string }
+        customerName: { type: string }
+        phone: { type: string }
+        address: { type: string }
+        productCode: { type: string }
+        productName: { type: string }
+        color: { type: string }
+        size: { type: string }
+        quantity: { type: integer }
+        subtotal: { type: number }
+        deliveryFee: { type: number }
+        total: { type: number }
+        paymentMethod: { type: string }
+        paymentStatus: { type: string }
+        paid: { type: number }
+        deliveryMethod: { type: string }
+        rider: { type: ["string", "null"] }
+        deliveryStatus: { type: string }
+        status: { type: string }
+        channel: { type: string }
+        createdAt: { type: string }
+      required: [id, customerId, customerName, phone, address, productCode, productName, color, size, quantity, subtotal, deliveryFee, total, paymentMethod, paymentStatus, paid, deliveryMethod, rider, deliveryStatus, status, channel, createdAt]
+    OrderUpdate:
+      type: object
+      properties:
+        status: { type: string }
+        paymentStatus: { type: string }
+        paid: { type: number, minimum: 0 }
+        deliveryStatus: { type: string }
+    Customer:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        phone: { type: string }
+        address: { type: string }
+        platform: { type: string }
+        since: { type: string }
+        totalOrders: { type: integer }
+        delivered: { type: integer }
+        cancelled: { type: integer }
+        pending: { type: integer }
+        totalSpent: { type: number }
+        reliability: { type: integer }
+        notes: { type: string }
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+      required: [id, name, phone, address, platform, since, totalOrders, delivered, cancelled, pending, totalSpent, reliability, notes, orders]
+    CustomerInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        phone: { type: string }
+        address: { type: string }
+        platform: { type: string }
+        notes: { type: string }
+      required: [name, phone, address, platform, notes]
+    CustomerUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        phone: { type: string }
+        address: { type: string }
+        platform: { type: string }
+        notes: { type: string }
+    Product:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        code: { type: string }
+        price: { type: number }
+        stock: { type: integer }
+        category: { type: string }
+        colors: { type: array, items: { type: string } }
+        sizes: { type: array, items: { type: string } }
+        active: { type: boolean }
+      required: [id, name, code, price, stock, category, colors, sizes, active]
+    ProductInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        code: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+        stock: { type: integer, minimum: 0 }
+        category: { type: string }
+        colors: { type: array, items: { type: string } }
+        sizes: { type: array, items: { type: string } }
+      required: [name, code, price, stock, category, colors, sizes]
+    ProductUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        code: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+        stock: { type: integer, minimum: 0 }
+        category: { type: string }
+        colors: { type: array, items: { type: string } }
+        sizes: { type: array, items: { type: string } }
+        active: { type: boolean }
+    Delivery:
+      type: object
+      properties:
+        id: { type: string }
+        orderId: { type: string }
+        customerName: { type: string }
+        phone: { type: string }
+        address: { type: string }
+        method: { type: string }
+        fee: { type: number }
+        rider: { type: ["string", "null"] }
+        status: { type: string }
+      required: [id, orderId, customerName, phone, address, method, fee, rider, status]
+    DeliveryUpdate:
+      type: object
+      properties:
+        method: { type: string }
+        rider: { type: ["string", "null"] }
+        status: { type: string }
+    Payment:
+      type: object
+      properties:
+        id: { type: string }
+        orderId: { type: string }
+        customerName: { type: string }
+        method: { type: string }
+        total: { type: number }
+        paid: { type: number }
+        remaining: { type: number }
+        status: { type: string }
+        createdAt: { type: string }
+      required: [id, orderId, customerName, method, total, paid, remaining, status, createdAt]
+    PaymentUpdate:
+      type: object
+      properties:
+        method: { type: string }
+        paid: { type: number, minimum: 0 }
+        status: { type: string }
+    Conversation:
+      type: object
+      properties:
+        id: { type: string }
+        customerId: { type: ["string", "null"] }
+        customerName: { type: string }
+        snippet: { type: string }
+        channel: { type: string }
+        category: { type: string }
+        time: { type: string }
+        productCode: { type: string }
+        color: { type: string }
+        size: { type: string }
+        quantity: { type: integer }
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Message"
+      required: [id, customerId, customerName, snippet, channel, category, time, productCode, color, size, quantity, messages]
+    Message:
+      type: object
+      properties:
+        id: { type: string }
+        sender: { type: string }
+        text: { type: string }
+        time: { type: string }
+      required: [id, sender, text, time]
+    ConversationUpdate:
+      type: object
+      properties:
+        category: { type: string }
+    ShopSettings:
+      type: object
+      properties:
+        shopName: { type: string }
+        category: { type: string }
+        phone: { type: string }
+        address: { type: string }
+        currency: { type: string }
+        defaultDeliveryFee: { type: number }
+        defaultPaymentMethod: { type: string }
+        orderPrefix: { type: string }
+        appearance: { type: string }
+        onboarded: { type: boolean }
+        channels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChannelState"
+      required: [shopName, category, phone, address, currency, defaultDeliveryFee, defaultPaymentMethod, orderPrefix, appearance, onboarded, channels]
+    ChannelState:
+      type: object
+      properties:
+        name: { type: string }
+        state: { type: string }
+        description: { type: string }
+      required: [name, state, description]
+    ShopSettingsUpdate:
+      type: object
+      properties:
+        shopName: { type: string, minLength: 1 }
+        category: { type: string }
+        phone: { type: string }
+        address: { type: string }
+        currency: { type: string }
+        defaultDeliveryFee: { type: number, minimum: 0 }
+        defaultPaymentMethod: { type: string }
+        orderPrefix: { type: string }
+        appearance: { type: string }
+        onboarded: { type: boolean }
 
